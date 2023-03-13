@@ -7,12 +7,13 @@ DRY_RUN=$3
 DELETE_FROM_DATE=$(date -d "${BACKUP_GENERATIONS} day ago" +'%Y-%m-%d')
 
 for file in $(find ${BACKUP_DIR} -type f) ; do
-    file_date=$(echo -n ${file} | awk -F '[_]' '{print $1}')
+    file_date=$(echo -n ${file} | awk -F/ '{print $3}' | awk -F_ '{print $1}')
+    echo $file_date
     if [[ ! "${file_date}" > "${DELETE_FROM_DATE}" ]] ; then
         if [ -n "${DRY_RUN}" ] ; then
             echo ${file}
         else
-            echo "exec!"
+            rm -f ${file}
         fi
     fi
 done
