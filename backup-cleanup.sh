@@ -6,7 +6,7 @@ DRY_RUN=$3
 
 DELETE_FROM_DATE=$(date -d "${BACKUP_GENERATIONS} day ago" +'%Y-%m-%d')
 
-for file in $(find ${BACKUP_DIR}) ; do
+for file in $(find ${BACKUP_DIR} -type f) ; do
     file_date=${dir%"_*.sql"} 
     if [[ ! "${file_date}" > "${DELETE_FROM_DATE}" ]] ; then
         if [ -n "${DRY_RUN}" ] ; then
