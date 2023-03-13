@@ -10,7 +10,7 @@ for file in $(find ${BACKUP_DIR}) ; do
     file_date=${dir%"_*.sql"} 
     if [[ ! "${file_date}" > "${DELETE_FROM_DATE}" ]] ; then
         if [ -n "${DRY_RUN}" ] ; then
-            echo ${dir}
+            echo ${file}
         else
             echo "exec!"
         fi
