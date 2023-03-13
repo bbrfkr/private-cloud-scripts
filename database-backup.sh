@@ -1,15 +1,12 @@
 #!/bin/bash
 
-BACKUP_BASEDIR=$1
+BACKUP_DIR=$1
 TARGET_DATABASE=$2
 NOTIFICATION_URL=$3
 DEBUG=$4
+DATE=$(date '+%Y-%m-%d')
 
-DATE=$(date '+%Y/%m/%d')
-BACKUP_DIR=${BACKUP_BASEDIR}/${DATE}
-
-mkdir -p ${BACKUP_DIR}
-mysqldump --databases ${TARGET_DATABASE} --flush-logs --single-transaction > ${BACKUP_DIR}/${TARGET_DATABASE}.sql
+mysqldump --databases ${TARGET_DATABASE} --flush-logs --single-transaction > ${BACKUP_DIR}/${DATE}_${TARGET_DATABASE}.sql
 
 if [ $? -ne 0 ] ; then
     curl -XPOST -H'Content-Type:application/json' -d "{\"content\":\"failed to backup for database ${TARGET_DATABASE}!!\"}" ${NOTIFICATION_URL}
