@@ -12,7 +12,7 @@ mkdir -p ${BACKUP_DIR}
 mysqldump --databases ${TARGET_DATABASE} --flush-logs --single-transaction > ${BACKUP_DIR}/${TARGET_DATABASE}.sql
 
 if [ $? -ne 0 ] ; then
-    curl -XPOST -d "{\"content\":\"failed to backup for database ${TARGET_DATABASE}!!\"}" ${NOTIFICATION_URL}
+    curl -XPOST -H'Content-Type:application/json' -d "{\"content\":\"failed to backup for database ${TARGET_DATABASE}!!\"}" ${NOTIFICATION_URL}
 elif [ -n "${DEBUG}" ] ; then
-    curl -XPOST -d "{\"content\":\"succeeded to backup for database ${TARGET_DATABASE}.\"}" ${NOTIFICATION_URL}
+    curl -XPOST -H'Content-Type:application/json' -d "{\"content\":\"succeeded to backup for database ${TARGET_DATABASE}.\"}" ${NOTIFICATION_URL}
 fi
