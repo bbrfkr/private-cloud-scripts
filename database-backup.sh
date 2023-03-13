@@ -13,6 +13,6 @@ mysqldump --databases ${TARGET_DATABASE} --flush-logs --single-transaction > ${B
 
 if [ $? -ne 0 ] ; then
     curl -XPOST -d "{\"content\":\"failed to backup for database ${TARGET_DATABASE}!!\"}" ${NOTIFICATION_URL}
-elif [ -n "${DEBUG}" ]
+elif [ -n "${DEBUG}" ] ; then
     curl -XPOST -d "{\"content\":\"succeeded to backup for database ${TARGET_DATABASE}.\"}" ${NOTIFICATION_URL}
 fi
