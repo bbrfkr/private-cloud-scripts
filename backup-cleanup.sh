@@ -1,14 +1,14 @@
 #!/bin/bash
 
-BACKUP_BASEDIR=$1
+BACKUP_DIR=$1
 BACKUP_GENERATIONS=$2
 DRY_RUN=$3
 
-DELETE_FROM_DATE=$(date -d "${BACKUP_GENERATIONS} day ago" +'%Y/%m/%d')
+DELETE_FROM_DATE=$(date -d "${BACKUP_GENERATIONS} day ago" +'%Y-%m-%d')
 
-for dir in $(find ${BACKUP_BASEDIR} -type d) ; do
-    dir_date=${dir#"${BACKUP_BASEDIR}/"} 
-    if [[ ! "${dir_date}" > "${DELETE_FROM_DATE}" ]] ; then
+for file in $(find ${BACKUP_DIR}) ; do
+    file_date=${dir%"_*.sql"} 
+    if [[ ! "${file_date}" > "${DELETE_FROM_DATE}" ]] ; then
         if [ -n "${DRY_RUN}" ] ; then
             echo ${dir}
         else
