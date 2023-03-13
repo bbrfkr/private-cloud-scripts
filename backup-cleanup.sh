@@ -6,9 +6,9 @@ DRY_RUN=$3
 
 DELETE_FROM_DATE=$(date -d "${BACKUP_GENERATIONS} day ago" +'%Y/%m/%d')
 
-for dir in $(find ${BACKUP_BASEDIR} -type d) ; done
+for dir in $(find ${BACKUP_BASEDIR} -type d) ; do
     dir_date=${dir#"${BACKUP_BASEDIR}/"} 
-    if [[ $dir_date <= "${DELETE_FROM_DATE}" ]] ; then
+    if [[ ! "${dir_date}" > "${DELETE_FROM_DATE}" ]] ; then
         if [ -n "${DRY_RUN}" ] ; then
             echo ${dir}
         else
