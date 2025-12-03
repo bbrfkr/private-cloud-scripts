@@ -4,7 +4,6 @@ BACKUP_DIR=$1
 TARGET_DATABASE=$2
 NOTIFICATION_URL=$3
 DEBUG=$4
-DATE=$(date '+%Y-%m-%d')
 
 (df | grep /share/backups > /dev/null) && mysqldump --databases ${TARGET_DATABASE} --flush-logs --single-transaction > ${BACKUP_DIR}/${TARGET_DATABASE}.sql
 
