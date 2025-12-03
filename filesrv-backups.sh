@@ -1,6 +1,5 @@
-. /root/venv/bin/activate
-. /root/admin.openrc
-cd /share/smb
-
-# segment size 256MiB
-swift upload --segment-size 268435456 filesrv-backups .
+#!/bin/bash -xe
+TARGET_DIR=$1
+BACKUP_DIR=$2
+mkdir -p $BACKUP_DIR
+rsync -avh --delete --backup --backup-dir="../backup-$(date +%Y%m%d-%H%M%S)" $TARGET_DIR $BACKUP_DIR/backup-latest
