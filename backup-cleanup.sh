@@ -6,7 +6,7 @@ DRY_RUN=$3
 
 DELETE_FROM_DATE=$(date -d "${BACKUP_GENERATIONS} day ago" +'%Y-%m-%d')
 
-for directory in $(find ${BACKUP_DIR} -type d) ; do
+for directory in $(ls -1 $BACKUP_DIR) ; do
     dir_date=$(echo -n ${directory} | awk -F"${BACKUP_DIR}/" '{print $2}' | awk -F- '{print $1}')
     if [[ ! "${dir_date}" > "${DELETE_FROM_DATE}" ]] ; then
         if [ -n "${DRY_RUN}" ] ; then
